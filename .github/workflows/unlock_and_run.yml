@@ -49,8 +49,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Prepare run.sh
-        run: chmod +x scripts/run.sh
+      - name: Run latest assignment
+        run: |
+         ls
+         pwd
+         LATEST=$(find . -type d -name "asg_*" -exec stat -c "%Y %n" {} \; | sort -nr | head -1 | cut -d' ' -f2-)
+         cd "$LATEST"
+         chmod +x ./scripts/run.sh
+         ./scripts/run.sh
 
-      - name: Run tests
-        run: ./scripts/run.sh
